@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react'
+import droneService from './services/droneService'
 
-function App() {
+const App = () => {
+  const [drones, setDrones] = useState({})
+
+  useEffect(() => {
+    droneService.getAll().then(initialDrones => setDrones(initialDrones))
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Project Birdnest</h1>
+      <ul>
+        {Object.keys(drones).map((serial) => (
+          <li key={serial}><b>{serial}</b>: Closest distance {Math.round(drones[serial].distance/1000)} meters</li>
+        ))}
+      </ul>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
