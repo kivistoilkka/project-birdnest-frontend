@@ -6,16 +6,42 @@ const App = () => {
 
   useEffect(() => {
     droneService.getAll().then(initialDrones => setDrones(initialDrones))
-  })
+  }, [])
 
   return (
     <div>
       <h1>Project Birdnest</h1>
-      <ul>
-        {Object.keys(drones).map((serial) => (
-          <li key={serial}><b>{serial}</b>: Closest distance {Math.round(drones[serial].distance/1000)} meters</li>
-        ))}
-      </ul>
+      <table>
+        <thead>
+          <tr>
+            <th>Distance from nest</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone number</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.keys(drones).map((serial) => {
+            const pilot = drones[serial].pilot
+            let name = ''
+            let email = ''
+            let phoneNumber = ''
+            if (pilot) {
+              name = drones[serial].pilot.name
+              email = drones[serial].pilot.email
+              phoneNumber = drones[serial].pilot.phoneNumber
+            }
+            return (
+              <tr key={serial}>
+                <td>{Math.round(drones[serial].distance/1000)} m</td>
+                <td>{name}</td>
+                <td>{email}</td>
+                <td>{phoneNumber}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </div>
   )
 }
