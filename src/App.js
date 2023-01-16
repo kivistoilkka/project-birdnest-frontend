@@ -4,18 +4,32 @@ import droneService from './services/droneService'
 
 const App = () => {
   const [drones, setDrones] = useState({})
-  const socket = io()
+  const socket = io({
+    reconnection: false
+  })
 
   useEffect(() => {
     droneService.getAll().then(initialDrones => setDrones(initialDrones))
   }, [])
 
+  const tryReconnect = () => {
+    setTimeout(() => {
+      socket.io.open((err) => {
+        if (err) {
+          tryReconnect()
+        } else {
+          droneService.getAll().then(initialDrones => setDrones(initialDrones))
+        }
+      })
+    }, 2000)
+  }
+
+  socket.io.on('close', tryReconnect)
+
   useEffect(() => {
     socket.on('dronesUpdated', (newDrones) => {
       setDrones(JSON.parse(newDrones))
     })
-
-    socket.on('disconnect',  () => socket.disconnect())
   }, [])
 
   return (
