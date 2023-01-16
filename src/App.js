@@ -31,7 +31,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.keys(drones).map((serial) => {
+          {Object.keys(drones).reverse().map((serial) => {
             const pilot = drones[serial].pilot
             let name = ''
             let email = ''
