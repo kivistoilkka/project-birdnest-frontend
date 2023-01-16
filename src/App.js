@@ -1,11 +1,21 @@
+import { io } from 'socket.io-client'
 import { useEffect, useState } from 'react'
 import droneService from './services/droneService'
 
 const App = () => {
   const [drones, setDrones] = useState({})
+  const socket = io()
 
   useEffect(() => {
     droneService.getAll().then(initialDrones => setDrones(initialDrones))
+  }, [])
+
+  useEffect(() => {
+    socket.on('dronesUpdated', (newDrones) => {
+      setDrones(JSON.parse(newDrones))
+    })
+
+    socket.on('disconnect',  () => socket.disconnect())
   }, [])
 
   return (
@@ -15,7 +25,7 @@ const App = () => {
         <thead>
           <tr>
             <th>Distance from nest</th>
-            <th>Name</th>
+            <th>Pilot name</th>
             <th>Email</th>
             <th>Phone number</th>
           </tr>
