@@ -2,6 +2,8 @@ import { io } from 'socket.io-client'
 import { useEffect, useState } from 'react'
 import droneService from './services/droneService'
 
+import { Table } from 'react-bootstrap'
+
 const App = () => {
   const [drones, setDrones] = useState({})
 
@@ -59,9 +61,9 @@ const App = () => {
   }, [])
 
   return (
-    <div>
+    <div className="container">
       <h1>Project Birdnest</h1>
-      <table>
+      <Table striped>
         <thead>
           <tr>
             <th>Distance from nest</th>
@@ -95,7 +97,7 @@ const App = () => {
               )
             })}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }
