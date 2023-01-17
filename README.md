@@ -1,4 +1,6 @@
-# Getting Started with Create React App
+# Project Birdnest frontend
+
+**Backend can be found [here](https://github.com/kivistoilkka/project-birdnest).**
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
