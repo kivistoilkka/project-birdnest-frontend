@@ -21,24 +21,6 @@ const App = () => {
     }, 2000)
   }
 
-  // const updateDrones = (droneList) => {
-  //   const updatedDrones = structuredClone(drones)
-  //   droneList.forEach(drone => {
-  //     console.log('Updated drone:', drone)
-  //     updatedDrones[drone.serial] = drone
-  //   })
-  //   setDrones(updatedDrones)
-  // }
-
-  // const removeDrones = (droneList) => {
-  //   const updatedDrones = structuredClone(drones)
-  //   droneList.forEach(drone => {
-  //     console.log('Drone to remove:', drone)
-  //     delete updatedDrones[drone.serial]
-  //   })
-  //   setDrones(updatedDrones)
-  // }
-
   const updateDrones = (newDrones) => {
     setDrones(newDrones)
   }
@@ -51,11 +33,6 @@ const App = () => {
       const droneList = JSON.parse(data)
       updateDrones(droneList)
     })
-
-    // socket.on('dronesRemoved', (data) => {
-    //   const droneList = JSON.parse(data)
-    //   removeDrones(droneList)
-    // })
 
     socket.io.on('close', tryReconnect(socket))
   }, [])
